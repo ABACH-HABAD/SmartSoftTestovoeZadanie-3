@@ -1,0 +1,1 @@
+# SmartSoftTestovoeZadanie-3
