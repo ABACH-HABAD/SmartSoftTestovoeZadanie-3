@@ -1,14 +1,14 @@
 <?php
 
-namespace Reviews;
+namespace Classes;
 
 class ReviewRepository 
 {
-    private static array $allReviews = [];
+    private static array $allReviews = array();
 
     public static function Clear() : void 
     {
-        self::$allReviews[] = [];
+        self::$allReviews = array();
     }
 
     public static function AddReview(Review $review) : void 

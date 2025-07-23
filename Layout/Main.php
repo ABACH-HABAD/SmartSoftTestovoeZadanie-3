@@ -5,7 +5,7 @@ namespace Layout;
 include __DIR__.'/AbstractMain.php';
 include __DIR__. '/../Classes/ReviewRepository.php';
 
-use Reviews\ReviewRepository;
+use Classes\ReviewRepository;
 use Layout\AbstractMain;
 
 class Main extends AbstractMain

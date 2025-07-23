@@ -4,11 +4,11 @@ namespace Layout;
 
 include __DIR__.'/../Classes/Model.php';
 
-use Models\Model;
+use Classes\Model;
 
 abstract class AbstractMain
 {
-    protected static Model $model;
+    protected static $model;
 
     public function __construct()
     {

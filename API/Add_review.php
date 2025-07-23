@@ -4,7 +4,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 include __DIR__.'/../Classes/Model.php';
 
-use Models\Model;
+use Classes\Model;
 
 try
 {

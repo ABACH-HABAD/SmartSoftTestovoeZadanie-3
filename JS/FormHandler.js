@@ -1,13 +1,7 @@
 //Привязка функций к кнопкам
 $(document).ready(function () {
   $("#FormRegistration").on("submit", sendForm1);
-});
-
-$(document).ready(function () {
   $("#FormOrder").on("submit", sendForm2);
-});
-
-$(document).ready(function () {
   $("#FormCreateReview").on("submit", sendForm3);
 });
 
@@ -61,10 +55,17 @@ function sendForm1(event) {
         });
       }
     },
-    error: function (xhr, status, error) {
+    error: function (response, xhr, status, error) {
+      var errText =
+        "Произошла критическая ошибка при отправке! Повторите попытку отправить позже.";
+      if (
+        response.responseJSON.error != undefined &&
+        response.responseJSON.error != null
+      )
+        errText = response.responseJSON.error;
       Swal.fire({
         title: "Критическая ошибка!",
-        text: "Произошла критическая ошибка при отправке: " + error,
+        text: errText,
         icon: "error",
       });
     },
@@ -146,15 +147,22 @@ function sendForm3(event) {
       } else {
         Swal.fire({
           title: "Ошибка!",
-          text: "Произошла ошибка при отправке: " + response.error,
+          text: "Произошла ошибка при отправке! " + response.error,
           icon: "error",
         });
       }
     },
-    error: function (xhr, status, error) {
+    error: function (response, xhr, status, error) {
+      var errText =
+        "Произошла критическая ошибка при отправке! Повторите попытку отправить позже.";
+      if (
+        response.responseJSON.error != undefined &&
+        response.responseJSON.error != null
+      )
+        errText = response.responseJSON.error;
       Swal.fire({
         title: "Критическая ошибка!",
-        text: "Произошла критическая ошибка при отправке: " + error,
+        text: errText,
         icon: "error",
       });
     },

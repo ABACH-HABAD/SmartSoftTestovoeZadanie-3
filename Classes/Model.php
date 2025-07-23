@@ -1,13 +1,13 @@
 <?php
 
-namespace Models;
+namespace Classes;
 
 include __DIR__.'/Review.php';
 
 use Exception;
 use mysqli;
-use Reviews\Review;
-use Reviews\ReviewRepository;
+use Classes\Review;
+use Classes\ReviewRepository;
 
 const ERROR = "Произошла ошибка при подключении к базе данных: ошибка выполнения запроса к базе данных";
 
@@ -17,21 +17,23 @@ class Model
 
     public function __construct()
     {
-        $this->connection = self::connectToDataBase("localhost", "root", "123456789");
+        $config = require __DIR__.'/../config/db.php';
+        $this->connection = self::connectToDataBase($config['host'], $config['user'], $config['password'], $config['database'], $config['port']); //); "localhost", "root", "123456789"
     }
 
-    private static function connectToDataBase(string $address, string $user, string $password) : ?object
+    private static function connectToDataBase(string $address, string $user, string $password, string $database, int $port = 3306) : ?object
     {
         try
         {
-        $connection = new mysqli($address, $user, $password);
-        if($connection->connect_error)
-        {
-        	throw new Exception("Произошла ошибка при подключении к базе данных: " . $connection->connect_error);
+            $connection = new mysqli($address, $user, $password, $database, $port);
+            if($connection->connect_error)
+            {
+        	    throw new Exception("Произошла ошибка при подключении к базе данных: " . $connection->connect_error);
+            }
+            $connection->set_charset('utf8mb4');
+            return $connection;
         }
-        return $connection;
-    }
-    catch(Exception $e) { return null; }
+        catch(Exception $e) { return null; }
     }
 
     public function GetReviews() : void
@@ -50,13 +52,20 @@ class Model
             }
             else
 		    {
-          	    die(ERROR);
+          	    throw new Exception(ERROR);
             }
 	    }			
 	    catch (Exception $e)
 	    {
-		    die(ERROR);
+		    error_log($e->getMessage());
+            throw $e;
 	    }
+        finally
+        {
+            if (isset($result)) {
+                $result->close();
+            }
+        }
     }
 
     public function AddReviewToDataBase(string $name, string $comment) : void

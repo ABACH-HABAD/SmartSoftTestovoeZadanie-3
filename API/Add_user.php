@@ -4,7 +4,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 include __DIR__.'/../Classes/Model.php';
 
-use Models\Model;
+use Classes\Model;
 
 try
 {
@@ -13,6 +13,11 @@ try
     if (empty($input['name']) || empty($input['surname']) || empty($input['email']) || empty($input['message'])) 
     {
         throw new Exception("Все поля обязательны для заполнения");
+    }
+
+    if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) 
+    {
+        throw new Exception("Некорректный email");
     }
 
     $model = new Model();

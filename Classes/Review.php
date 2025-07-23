@@ -1,13 +1,13 @@
 <?php
 
-namespace Reviews;
+namespace Classes;
 
 use Exception;
 
 class Review
 {
-    private readonly string $name;
-    private readonly string $comment;
+    private $name;
+    private $comment;
 
     function __construct(string $name, string $comment)
     {
